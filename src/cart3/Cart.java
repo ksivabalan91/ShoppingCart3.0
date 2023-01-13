@@ -35,7 +35,7 @@ public class Cart {
     //methods
     //add items 
     public String add(String input_arr){
-        String temp = "";
+        String temp = "";                                                                       // to store output as string
         String[] items = input_arr.split(",", 0);
         for (int i = 0; i<items.length;i++){
             if(cart.contains(items[i].toLowerCase().trim())){
@@ -151,7 +151,18 @@ public class Cart {
             }           
     }    
 
-    // not in use for this sgoppingcart iteration
+    public static String cartList(String folder){
+        File folderPath = new File(folder+"\\");
+        File[] listFiles = folderPath.listFiles();
+        String temp = "There are "+ listFiles.length+" carts in "+folder+" directory\n";
+
+        for(int i =0; i<listFiles.length;i++){
+            String fileName = listFiles[i].getName();
+            temp = temp + (i+1)+". "+fileName.substring(0,fileName.length()-4)+"\n";
+        }
+        return temp;
+    }
+    // not in use for this shoppingcart iteration
     public static void userList(String folder){
         File folderPath = new File(folder+"\\");
         File[] listFiles = folderPath.listFiles();

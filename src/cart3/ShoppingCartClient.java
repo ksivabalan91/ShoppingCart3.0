@@ -13,11 +13,12 @@ public class ShoppingCartClient {
     // remember to run withe arguments as follows: 
     // java -cp classes cart3.ShoppingCartClient customer@localhost:1056
     public static void main(String[] args) throws IOException{
+        //default customer, host and port if no args given
         String customer = "tim";
         String host = "localhost";
         int port = 1025;
     
-        if (args.length>1){    
+        if (args.length>=1){    
             customer = args[0].split("@", 0)[0].trim().toLowerCase();
             host = args[0].split("@", 0)[1].split(":", 0)[0].trim().toLowerCase();
             port = Integer.parseInt(args[0].split("@", 0)[1].split(":", 0)[1].trim());
@@ -27,7 +28,7 @@ public class ShoppingCartClient {
 
         Console cons = System.console();
 
-        try(Socket conn = new Socket(host,port)){
+        try(Socket conn = new Socket(host,port)){   //connect to server
             System.out.println("\nConnected to shopping cart server at "+host+" on "+customer+" port "+port +"\n");
             
             //initiallize input and output streams
@@ -36,19 +37,20 @@ public class ShoppingCartClient {
             InputStream is = conn.getInputStream();
             DataInputStream dis = new DataInputStream(is);
 
-            dos.writeUTF(customer);
-            System.out.println(dis.readUTF());
+            dos.writeUTF(customer);                 // send customer information to ClientHandler file, line 33
+            System.out.println(dis.readUTF());      // recieve string from ClientHandler and print
             
             while(!exit){
-                String input = cons.readLine("> ");
-                String[] input_arr = input.toLowerCase().trim().split(" ", 2);
+                String input = cons.readLine("> ");                                     // get input from console
+                String[] input_arr = input.toLowerCase().trim().split(" ", 2); // split input into "command" and "items" 
+                                                                                            //eg. add apple, pear, add-> command; apple,pear-> items
                 
-                switch(input_arr[0].trim()){
+                switch(input_arr[0].trim()){                    // check command
                     //shopping cart methods
                     case Constants.ADD: 
-                        dos.writeUTF(Constants.ADD); 
-                        dos.writeUTF(input_arr[1]);
-                        System.out.println(dis.readUTF());
+                        dos.writeUTF(Constants.ADD);            // send command to ClientHandler
+                        dos.writeUTF(input_arr[1]);             // send items string to ClientHandler
+                        System.out.println(dis.readUTF());      // print string recieved from ClientHandler
                         break;                
                     case Constants.DELETE ,Constants.REMOVE: 
                         dos.writeUTF(Constants.DELETE);
@@ -70,7 +72,7 @@ public class ShoppingCartClient {
                         break;                
                     
                     case Constants.EXIT:
-                        dos.writeUTF(Constants.EXIT);
+                        dos.writeUTF(Constants.EXIT);           //exit keywword sets exit to true and breaks out the while loop
                         exit = true;
                         break;
                     default:
