@@ -10,8 +10,13 @@ public class ShoppingCartServer {
     // java -cp classes cart3.ShoppingCartServer directoryFolder 1056
     public static void main(String[] args) throws IOException, EOFException{
         //default port if no args given
-        String dataDirectory = args[0];
-        int port = Integer.parseInt(args[1]);
+        String dataDirectory = "cartdb";
+        int port = 1025;       
+        
+        if (args.length>1){
+            dataDirectory = args[0];
+            port = Integer.parseInt(args[1]);
+        }
         
         System.out.println("\nStarting shopping cart server on port "+port+"\n");
         System.out.println("Connected to "+dataDirectory+" directory for persistence\n");
