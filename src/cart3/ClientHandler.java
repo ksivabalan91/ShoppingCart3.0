@@ -10,9 +10,9 @@ import java.net.Socket;
 
 public class ClientHandler {
 
-    private Socket conn;
-    private String dataDirectory;
-    private Cart customer = new Cart();
+    private Socket conn;                                            // socket
+    private String dataDirectory;                                   // directory of folder of all cart txt files
+    private Cart customer = new Cart();                             // create instance of Cart class
     private boolean exit = false;
     
     // constructor
@@ -30,36 +30,36 @@ public class ClientHandler {
         OutputStream os = conn.getOutputStream();
         DataOutputStream dos = new DataOutputStream(os);
 
-        String userCart = dis.readUTF();                            // reciever user name, corresponding client write in Client file, line 40
-        dos.writeUTF(customer.userLogin(userCart, dataDirectory));  // returns string to client, refer to Cart.java userLogin method for return info
+        String userCart = dis.readUTF();                            // recieves user name string from client via readUTF
+        dos.writeUTF(customer.userLogin(userCart, dataDirectory));  // run Cart.userLogin method with customer name and cart txt file folder directory, returns string to client via write UTF, 
 
         while(!exit){
             // reading datainputstream from client
-            String command = dis.readUTF().trim();                  // recieve command
-            switch(command){                                        // check command type
+            String command = dis.readUTF().trim();                  // recieve command from client via readUTF
+            switch(command){                                        // check command type with swtich statement
                 //shopping cart methods
                 case Constants.ADD:                                 
-                    dos.writeUTF(customer.add(dis.readUTF()));      // pass items list from client into Cart.java method for execution and return string to client
-                    dos.flush();
+                    dos.writeUTF(customer.add(dis.readUTF()));      // read items list from client via readUTF into Cart.add methods for execution
+                    dos.flush();                                    // return string to client via writeUTF and flush writer
                     break;
                 case Constants.DELETE ,Constants.REMOVE: 
-                    dos.writeUTF(customer.delete(dis.readUTF()));
-                    dos.flush();
+                    dos.writeUTF(customer.delete(dis.readUTF()));   // read items list from client via readUTF into Cart.delete methods for execution
+                    dos.flush();                                    // return string to client via writeUTF and flush writer
                     break;
                 case Constants.CLEAR: 
-                    dos.writeUTF(customer.clear());
-                    dos.flush();
+                    dos.writeUTF(customer.clear());                 // run Cart.clear method
+                    dos.flush();                                    // return string to client via writeUTF and flush writer    
                     break;
                 case Constants.LIST: 
-                    dos.writeUTF(customer.list());
-                    dos.flush();
+                    dos.writeUTF(customer.list());                  // run Cart.list method
+                    dos.flush();                                    // return string to client via writeUTF and flush writer
                     break;                    
                 case Constants.SAVE: 
-                    dos.writeUTF(customer.saveCart(dataDirectory));
-                    dos.flush();
+                    dos.writeUTF(customer.saveCart(dataDirectory)); // run Cart.save method with cart txt folder as directory
+                    dos.flush();                                    // return string to client via writeUTF and flush writer
                     break;
-                case Constants.EXIT:                                //exit keywword sets exit to true and breaks out the while loop
-                    this.exit = true;
+                case Constants.EXIT:                                
+                    this.exit = true;                               // exit keywword sets exit to true and breaks out the while loop
                     break;
             }
         }
