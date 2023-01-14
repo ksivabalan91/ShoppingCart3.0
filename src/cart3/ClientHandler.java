@@ -43,7 +43,7 @@ public class ClientHandler {
                     dos.flush();                                    // return string to client via writeUTF and flush writer
                     break;
                 case Constants.DELETE ,Constants.REMOVE: 
-                    dos.writeUTF(customer.delete(dis.readUTF()));   // read items list from client via readUTF into Cart.delete methods for execution
+                    dos.writeUTF(customer.newDelete(dis.readUTF()));   // read items list from client via readUTF into Cart.delete methods for execution
                     dos.flush();                                    // return string to client via writeUTF and flush writer
                     break;
                 case Constants.CLEAR: 

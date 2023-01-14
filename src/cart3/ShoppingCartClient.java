@@ -74,7 +74,7 @@ public class ShoppingCartClient {
                     default:
                         System.out.println("\nYou may input the following commands:\n"+                             // default case listing possible commands
                         "1. add\t\t - add items to your cart, add multiple items to your cart with ','\n"+
-                        "2. delete/remove - remove items from your cart\n"+
+                        "2. delete\\remove - remove items from your cart, remove multiple items with ','\n"+
                         "3. list\t\t - list all items in your cart\n"+
                         "4. clear\t - remvoes all items from your cart\n"+
                         "5. save\t\t - save your shopping cart for future use\n"+
