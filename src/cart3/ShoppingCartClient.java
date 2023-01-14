@@ -38,8 +38,8 @@ public class ShoppingCartClient {
             System.out.println(dis.readUTF());                                                                      // recieve string from ClientHandler and print
             
             while(!exit){
-                String input = cons.readLine("> ");                                                            // get input from console
-                String[] input_arr = input.toLowerCase().trim().split(" ", 2);                         // split input into "command" and "items", eg. add apple, pear, add-> command; apple,pear-> items
+                String input = cons.readLine("> ");                                                             // get input from console
+                String[] input_arr = input.toLowerCase().trim().split(" ", 2);                          // split input into "command" and "items", eg. add apple, pear, add-> command; apple,pear-> items
                                                                                              
                 
                 switch(input_arr[0].trim()){                                                                        // check command, first word entered in console
@@ -50,7 +50,7 @@ public class ShoppingCartClient {
                         break;                
                     case Constants.DELETE ,Constants.REMOVE: 
                         dos.writeUTF(Constants.DELETE);                                                             // send command to ClientHandler
-                        dos.writeUTF(input_arr[1]);
+                        dos.writeUTF(input_arr[1]);                                                                 // send items string to ClientHandler
                         System.out.println(dis.readUTF());                                                          // print string recieved from ClientHandler
                         break;
                     case Constants.CLEAR: 
