@@ -139,10 +139,10 @@ public class Cart {
                 this.loggedIn = true;                                                           // set login to true
                 return customerName+" shopping cart loaded\n";                                  // returns string reponse
             } else{ 
-                String[] itemSplit = nameItemSplit[1].split(" ", 0);               // split by " " delimiter to get all items and store in itemSplit String array
+                String[] itemSplit = nameItemSplit[1].split(",", 0);               // split by " " delimiter to get all items and store in itemSplit String array
 
                 List<String> fileItemList = new LinkedList<>();                                 // create new list to store all its items
-                for (String item: itemSplit){fileItemList.add(item);}                           // for loop to add all items in itemSplit array to fileItemList list
+                for (String item: itemSplit){fileItemList.add(item.trim());}                           // for loop to add all items in itemSplit array to fileItemList list
 
                 // initiallize variables with info from txt file
                 this.customerName = nameItemSplit[0];                                           // set customername
@@ -163,11 +163,15 @@ public class Cart {
 
         if(this.loggedIn){                                                                      // checked if logged in
             FileWriter writer = new FileWriter(folder+"\\"+this.customerName+".txt");           // create new filewrite to output file
-        
-            String itemString = "";                                                             // create new string to store all items
-            for (String item:this.cart){                                                        // for loop to add items in cart list to itemString
-                itemString = itemString + item +" ";
+            String itemString = "";                                                             // create new string to store all items  
+            for(int i=0; i <cart.size()-1;i++){
+                itemString += cart.get(i) + ", ";
             }
+            itemString += cart.get(cart.size()-1);
+                                                           
+            // for (String item:this.cart){                                                        // for loop to add items in cart list to itemString
+            //     itemString = itemString + item +" ";
+            // }
             
             writer.write(this.customerName+" ");                                                // write customer name
             writer.write(itemString);                                                           // write compiled string
