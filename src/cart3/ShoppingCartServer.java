@@ -23,15 +23,18 @@ public class ShoppingCartServer {
 
         
         ServerSocket serverSocket = new ServerSocket(port);                         // start seversocket
-        Socket conn = serverSocket.accept();                                        // waiting for connection from client to accept
-        System.out.println("Connection received...\n");
+        while(true){
+            new Threader(serverSocket.accept(),dataDirectory).start();
+        }
+        // Socket conn = serverSocket.accept();                                        // waiting for connection from client to accept
+        // System.out.println("Connection received...\n");
 
-        ClientHandler client1 = new ClientHandler(conn,dataDirectory);              // instantiate new clienthandler with socket and directory input
-        client1.run();                                                              // calling clienthandler method to run
+        // ClientHandler client1 = new ClientHandler(conn,dataDirectory);              // instantiate new clienthandler with socket and directory input
+        // client1.run();                                                              // calling clienthandler method to run
 
-        System.out.println("Closing connection...\n");
-        conn.close();                                                               // close connections
-        serverSocket.close();
-        System.out.println("Done\n");
+        // System.out.println("Closing connection...\n");
+        // conn.close();                                                               // close connections
+        // serverSocket.close();
+        // System.out.println("Done\n");
     }
 }
