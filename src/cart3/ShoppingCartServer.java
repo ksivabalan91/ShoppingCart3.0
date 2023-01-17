@@ -3,7 +3,6 @@ package cart3;
 import java.io.EOFException;
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
 
 public class ShoppingCartServer {
     // remember to run with database directory and some port arguments as follows: 
@@ -22,19 +21,10 @@ public class ShoppingCartServer {
         System.out.println("Connected to "+dataDirectory+" directory for persistence\n\n"+Cart.cartList(dataDirectory));
 
         
-        ServerSocket serverSocket = new ServerSocket(port);                         // start seversocket
-        while(true){
-            new Threader(serverSocket.accept(),dataDirectory).start();
-        }
-        // Socket conn = serverSocket.accept();                                        // waiting for connection from client to accept
-        // System.out.println("Connection received...\n");
-
-        // ClientHandler client1 = new ClientHandler(conn,dataDirectory);              // instantiate new clienthandler with socket and directory input
-        // client1.run();                                                              // calling clienthandler method to run
-
-        // System.out.println("Closing connection...\n");
-        // conn.close();                                                               // close connections
-        // serverSocket.close();
-        // System.out.println("Done\n");
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
+            while(true){
+                new Threader(serverSocket.accept(),dataDirectory).start();
+            }
+        }        
     }
 }
